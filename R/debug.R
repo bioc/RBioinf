@@ -94,3 +94,34 @@ printWithNumbers = function(f) {
  invisible(fform)
 }
 
+ ##crappy little helper function to parse the value
+ ##returned by showMethods
+ parseMethods <- function(input) {
+   in2 = gsub('"', '', input)
+   slens = nchar(in2)
+   in2 = in2[slens > 0 ]
+   ##FIXME: how to set signature when two or more are involved
+   in2 = strsplit(in2, ", ")
+   in3 = sapply(in2, function(x) strsplit(x, "=")[[1]][2])
+   return(in3)
+ }
+   
+
+ traceMethods <- function(generic, traceStrings) {
+   if( is.character(generic) ) gendef = get(generic) else {
+     gendef = generic
+     generic = deparse(substitute(generic)) }
+   if( !isGeneric(generic) ) stop("need a generic function")
+   z = textConnection("foo", "w")
+   on.exit(close(z))
+   showMethods(generic, printTo=z)
+   methSigs = parseMethods(foo[-1])
+   if(missing(traceStrings) )
+     traceStrings = paste("in method", methSigs)
+   for( i in methSigs ) {
+     trcr = substitute(expression(print(foo)), list(foo=i))
+     do.call("trace", list(generic, signature = i, tracer = trcr))
+   }
+   methSigs
+ }
+

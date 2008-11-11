@@ -4,5 +4,5 @@ export(simpleSort, simpleRand, asSimpleVector, Rcal, subClassNames,
   superClassNames, simplePVect, LPO, superClasses, class2Graph,
   S4Help, computeClassLinearization, randDNA,
  subsetAsCharacter, setVNames, convertMode, printWithNumbers,
-  classList2Graph)
+  classList2Graph, traceMethods)
 
