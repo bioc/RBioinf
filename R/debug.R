@@ -107,7 +107,7 @@ printWithNumbers = function(f) {
  }
    
 
- traceMethods <- function(generic, traceStrings) {
+ traceMethods <- function(generic, traceStrings, tracer) {
    if( is.character(generic) ) gendef = get(generic) else {
      gendef = generic
      generic = deparse(substitute(generic)) }
@@ -118,10 +118,13 @@ printWithNumbers = function(f) {
    methSigs = parseMethods(foo[-1])
    if(missing(traceStrings) )
      traceStrings = paste("in method", methSigs)
-   for( i in methSigs ) {
-     trcr = substitute(expression(print(foo)), list(foo=i))
-     do.call("trace", list(generic, signature = i, tracer = trcr))
+   for( i in 1:length(methSigs) ) {
+     if( missing(tracer) )
+       tracer = substitute(expression(print(foo)), list(foo=traceStrings[i]))
+     do.call("trace", list(generic, signature = methSigs[i], tracer = tracer))
    }
    methSigs
  }
 
+ untraceMethods <- function(generic, methodSigs) 
+   for( i in methodSigs) untrace(generic, methodSigs[i])
