@@ -98,17 +98,14 @@ printWithNumbers = function(f) {
  ##returned by showMethods
  ##for now, we will drop methods that are "inherited",
  ##
- parseMethods <- function(input) {
+ parseSignatures <- function(input) {
    drop = grep("inherited", input)
    if( length(drop) )
        input = input[-drop]
-   in2 = gsub('"', '', input)
-   slens = nchar(in2)
-   in2 = in2[slens > 0 ]
-   ##FIXME: how to set signature when two or more are involved
-   in2 = strsplit(in2, ", ")
-   in3 = sapply(in2, function(x) strsplit(x, "=")[[1]][2])
-   return(in3)
+   ##sometimes we get empty lines
+   slens = nchar(input)
+   in2 = input[slens > 0 ]
+   return(paste("c(", in2, ")"))
  }
    
 
@@ -118,16 +115,17 @@ printWithNumbers = function(f) {
      generic = deparse(substitute(generic)) }
    if( !isGeneric(generic) ) stop("need a generic function")
    foo = showMethods(generic, printTo=FALSE)
-   methSigs = parseMethods(foo[-1])
+   methSigs = parseSignatures(foo[-1])
    if(missing(traceStrings) )
      traceStrings = paste("in method", methSigs)
    for( i in 1:length(methSigs) ) {
      if( missing(tracer) )
        tracer = substitute(expression(print(foo)), list(foo=traceStrings[i]))
-     do.call("trace", list(generic, signature = methSigs[i], tracer = tracer,
-        where=.GlobalEnv))
+     do.call("trace", list(generic, 
+                signature = eval(parse(text=methSigs[i])), tracer = tracer,
+                where=.GlobalEnv))
    }
-   methSigs
+   invisible(methSigs)
  }
 
  untraceMethods <- function(generic, methodSigs) 
