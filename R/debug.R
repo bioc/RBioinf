@@ -96,7 +96,12 @@ printWithNumbers = function(f) {
 
  ##crappy little helper function to parse the value
  ##returned by showMethods
+ ##for now, we will drop methods that are "inherited",
+ ##
  parseMethods <- function(input) {
+   drop = grep("inherited", input)
+   if( length(drop) )
+       input = input[-drop]
    in2 = gsub('"', '', input)
    slens = nchar(in2)
    in2 = in2[slens > 0 ]
@@ -112,16 +117,15 @@ printWithNumbers = function(f) {
      gendef = generic
      generic = deparse(substitute(generic)) }
    if( !isGeneric(generic) ) stop("need a generic function")
-   z = textConnection("foo", "w")
-   on.exit(close(z))
-   showMethods(generic, printTo=z)
+   foo = showMethods(generic, printTo=FALSE)
    methSigs = parseMethods(foo[-1])
    if(missing(traceStrings) )
      traceStrings = paste("in method", methSigs)
    for( i in 1:length(methSigs) ) {
      if( missing(tracer) )
        tracer = substitute(expression(print(foo)), list(foo=traceStrings[i]))
-     do.call("trace", list(generic, signature = methSigs[i], tracer = tracer))
+     do.call("trace", list(generic, signature = methSigs[i], tracer = tracer,
+        where=.GlobalEnv))
    }
    methSigs
  }
