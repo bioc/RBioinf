@@ -121,7 +121,7 @@ printWithNumbers = function(f) {
    for( i in 1:length(methSigs) ) {
      if( missing(tracer) )
        tracer = substitute(expression(print(foo)), list(foo=traceStrings[i]))
-     do.call("trace", list(generic, 
+     do.call(trace, list(generic, 
                 signature = eval(parse(text=methSigs[i])), tracer = tracer,
                 where=.GlobalEnv))
    }

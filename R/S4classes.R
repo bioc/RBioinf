@@ -109,8 +109,8 @@ classList2Graph = function(class, fullNames=TRUE) {
                return(NULL)
         } else whichone = 1
         if( whichone == 1)
-           print(do.call("help", list(topic = name)))
-        else print(do.call("help", list(topic = paste(name, ",", 
+           print(do.call(help, list(topic = name)))
+        else print(do.call(help, list(topic = paste(name, ",", 
                 methList[whichone], "-method", sep=""))))
        } else warning(name, " is neither a known class or generic function")
    return(invisible(NULL))
