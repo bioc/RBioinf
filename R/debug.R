@@ -51,15 +51,15 @@ printWithNumbers = function(f) {
  if( !is.function(f) )
    stop("requires a function argument")
 
- fform = capture.output(f)
+ if( is(f, "functionWithTrace") ) {
+   warning("function is being traced, using original")
+   f = f@original
+ }
+
+ # fform = capture.output(f)
  lnos = as.list(body(f))
- if( lnos[[1]] == '{' )
-     lnos[[1]] = "{"
- else
+ if( lnos[[1]] != '{' )
      stop("only set line numbers for functions that use {")
- start = match("{", fform)
- if( is.na(start) )
-     stop("problems with {")
 
  ##set the padding
  nlnos = length(lnos)
@@ -67,31 +67,30 @@ printWithNumbers = function(f) {
  else if( nlnos >= 10 ) extras = "   "
  else extras = "  "
 
- lni = 1
- for(i in 1:length(fform) ) {
-    if(i < start || lni > nlnos ) {
-      fform[i] = paste(extras, fform[i], sep="")
-      next
-    }
-    tstr = gsub("^\\s*", "", fform[i])
-    if( length(grep(tstr, deparse(lnos[[lni]]), fixed=TRUE)) > 0 ){
-      if( nlnos >= 100 ) {
-          if( lni < 10 ) spaces = "  "
-          else if( lni < 100 ) spaces = " "
-          else spaces = ""
-      } else if (nlnos >= 10 ) {
-          if(lni < 10 ) spaces = " "
-          else spaces = ""
-      } else
-          spaces = ""
-      fform[i] = paste(lni, ":", spaces, fform[i], sep="")
-      lni = lni + 1
-    }
-    else
-      fform[i] = paste(extras, fform[i], sep="")
+
+ fform = list() 
+ fform[[1]] = deparse(args(f))[[1]]
+ for(i in 1:nlnos) {
+   if( nlnos >= 100 ) {
+       if( i < 10 ) spaces = "  "
+         else if( i < 100 ) spaces = " "
+              else spaces = ""
+   } 
+   else{
+       if (nlnos >= 10 ) {
+          if(i < 10 ) spaces = " " else spaces = ""
+       } 
+       else spaces = ""
+   }
+   tmp = deparse(lnos[[i]])
+   nl = length(tmp)
+   fform[[i+1]] = paste(c(paste(i,":", sep=""), rep("  ", nl-1)), 
+                      spaces, 
+                      deparse(lnos[[i]]), sep="")
  }
- cat(fform, sep="\n")
- invisible(fform)
+ fform[[nlnos+2]] = "}"
+ cat(unlist(fform), sep="\n")
+ invisible(unlist(fform))
 }
 
  ##crappy little helper function to parse the value
