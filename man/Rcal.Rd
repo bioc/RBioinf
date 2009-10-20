@@ -24,7 +24,9 @@ Rcal(month, year)
 
 \seealso{ \code{\link{pipe}} }
 \examples{
-  Rcal()
-  Rcal(6, 1970)
+  if (.Platform$OS.type != "windows") {
+      Rcal()
+      Rcal(6, 1970)
+  }
 }
 \keyword{ manip }
