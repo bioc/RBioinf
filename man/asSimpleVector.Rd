@@ -51,5 +51,6 @@ the mode of the second argument.
 
 \seealso{ \code{\link{browser}} }
 \examples{
+  asSimpleVector(list(a = 1, b = 2), "character")
 }
 \keyword{ manip}
