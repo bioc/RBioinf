@@ -55,7 +55,7 @@ SEXP simpleRand(SEXP num, SEXP type)
     GetRNGstate();
     for(i=0; i<x; i++)
 	REAL(ans)[i] = norm_rand();
-    PutRNGstate;
+    PutRNGstate();
 
     /*create the language structure needed to call R */
     PROTECT(Rc = lang1(install("RNGkind")));
