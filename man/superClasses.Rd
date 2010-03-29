@@ -9,7 +9,7 @@ given a \code{classRepresentation}.
 superClasses(x)
 }
 \arguments{
-  \item{x}{  }
+  \item{x}{A \code{classRepresentation} object }
 }
 \details{
 This function needs to be rationalized with \code{superClassNames}.
