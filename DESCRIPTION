@@ -1,5 +1,5 @@
 Package: RBioinf
-Version: 1.9.0
+Version: 1.9.1
 Author: Robert Gentleman 
 Maintainer: Robert Gentleman <rgentlem@fhcrc.org>
 Description: Functions and datasets and examples to accompany the monograph
@@ -7,3 +7,5 @@ Description: Functions and datasets and examples to accompany the monograph
 Title: RBioinf
 Depends: graph, methods
 License: Artistic-2.0
+biocViews: GeneExpression, Microarray, Preprocessing, QualityControl,
+  Classification, Clustering, MultipleComparison, Annotation
