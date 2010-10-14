@@ -1,7 +1,7 @@
 Package: RBioinf
 Version: 1.9.1
 Author: Robert Gentleman 
-Maintainer: Robert Gentleman <rgentlem@fhcrc.org>
+Maintainer: Robert Gentleman <rgentlem@gmail.com>
 Description: Functions and datasets and examples to accompany the monograph
   R For Bioinformatics.
 Title: RBioinf
