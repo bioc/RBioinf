@@ -1,11 +1,12 @@
 Package: RBioinf
-Version: 1.19.0
+Version: 1.19.1
 Author: Robert Gentleman 
 Maintainer: Robert Gentleman <rgentlem@gmail.com>
 Description: Functions and datasets and examples to accompany the monograph
   R For Bioinformatics.
 Title: RBioinf
 Depends: graph, methods
+Suggests: Rgraphviz
 License: Artistic-2.0
 biocViews: GeneExpression, Microarray, Preprocessing, QualityControl,
   Classification, Clustering, MultipleComparison, Annotation
