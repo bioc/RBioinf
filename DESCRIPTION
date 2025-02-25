@@ -1,5 +1,5 @@
 Package: RBioinf
-Version: 1.67.0
+Version: 1.67.1
 Author: Robert Gentleman 
 Maintainer: Robert Gentleman <rgentlem@gmail.com>
 Description: Functions and datasets and examples to accompany the monograph
@@ -10,3 +10,4 @@ Suggests: Rgraphviz
 License: Artistic-2.0
 biocViews: GeneExpression, Microarray, Preprocessing, QualityControl,
   Classification, Clustering, MultipleComparison, Annotation
+PackageStatus: Deprecated
